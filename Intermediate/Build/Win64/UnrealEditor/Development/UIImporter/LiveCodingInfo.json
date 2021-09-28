@@ -1,0 +1,10 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.UIImporter.cpp.obj": [
+			"UIImporter.cpp.obj",
+			"UIImporterCommands.cpp.obj",
+			"UIImporterStyle.cpp.obj"
+		]
+	}
+}
