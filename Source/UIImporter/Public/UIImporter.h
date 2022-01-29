@@ -5,8 +5,12 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
+
+DECLARE_LOG_CATEGORY_EXTERN(LogUIBuilder, Log, All);
+
 class FToolBarBuilder;
 class FMenuBuilder;
+
 
 class FUIImporterModule : public IModuleInterface
 {

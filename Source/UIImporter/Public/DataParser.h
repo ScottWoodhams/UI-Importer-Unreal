@@ -1,7 +1,12 @@
 ﻿#pragma once
 
+#include "DataParser.generated.h"
 
-class DataParser : public UObject
+UCLASS()
+class UDataParser : public UObject
 {
+	GENERATED_BODY()
+public:
+	static bool ValidateData(const FAssetData* AssetData,  UDataTable& OutDataTable);
 
 };

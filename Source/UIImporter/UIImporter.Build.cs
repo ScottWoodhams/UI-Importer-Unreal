@@ -4,9 +4,9 @@ using UnrealBuildTool;
 
 public class UIImporter : ModuleRules
 {
-	public UIImporter(ReadOnlyTargetRules Target) : base(Target)
+	public UIImporter(ReadOnlyTargetRules target) : base(target)
 	{
-		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicIncludePaths.AddRange(
 			new string[] {
@@ -23,17 +23,17 @@ public class UIImporter : ModuleRules
 
 
 		PublicDependencyModuleNames.AddRange(
-			new string[]
+			new[]
 			{
 				"Core",
-				"EditorScriptingUtilities"
+
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
 
 
 		PrivateDependencyModuleNames.AddRange(
-			new string[]
+			new[]
 			{
 				"CoreUObject",
 				"Engine",

@@ -14,6 +14,7 @@
 static const FName UIImporterTabName("UIImporter");
 
 #define LOCTEXT_NAMESPACE "FUIImporterModule"
+DEFINE_LOG_CATEGORY(LogUIBuilder);
 
 void FUIImporterModule::StartupModule()
 {
