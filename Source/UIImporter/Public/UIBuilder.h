@@ -8,10 +8,10 @@ public:
 	void Run(FAssetData* AssetData, const UDataTable* DataTable);
 
 private:
-	UWidgetBlueprint* CreateWidgetBlueprint(FAssetData* AssetData);
+	TTuple<FString, UWidgetBlueprint*> CreateWidgetBlueprint(FAssetData* AssetData);
 	void UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBlueprint* WidgetBlueprint);
-
+	void SaveBlueprintAsset(FString AssetPath);
 
 	const FString CreatedUniqueBlueprintSuffix = "WBP";
-	const FName AssetToolsModuleName = "AssetToolsModuleName";
+	const FName AssetToolsModuleName = "AssetTools";
 };

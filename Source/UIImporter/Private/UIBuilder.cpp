@@ -12,12 +12,18 @@
 
 void UIBuilder::Run(FAssetData* AssetData, const UDataTable* DataTable)
 {
+	FString AssetPath = AssetData->PackagePath.ToString() + "/";
+	TTuple<FString, UWidgetBlueprint*> WidgetBlueprint = CreateWidgetBlueprint(AssetData);
 
-	UWidgetBlueprint* WidgetBlueprint = CreateWidgetBlueprint(AssetData);
-	UpdateWidgetBlueprint(DataTable, WidgetBlueprint);
+	if(WidgetBlueprint.Value != nullptr)
+	{
+		UpdateWidgetBlueprint(DataTable, WidgetBlueprint.Value);
+		SaveBlueprintAsset(WidgetBlueprint.Key);
+	}
+
 }
 
-UWidgetBlueprint* UIBuilder::CreateWidgetBlueprint(FAssetData* AssetData)
+TTuple<FString, UWidgetBlueprint*> UIBuilder::CreateWidgetBlueprint(FAssetData* AssetData)
 {
 	//todo get file name and directory
 	FString AssetPath = AssetData->PackagePath.ToString() + "/";
@@ -42,16 +48,16 @@ UWidgetBlueprint* UIBuilder::CreateWidgetBlueprint(FAssetData* AssetData)
 		FString Path = "";
 		FString Name = "";
 
-		auto UIBlueprintAsset = Cast<UWidgetBlueprint>(AssetTools.CreateAsset(
+		UWidgetBlueprint* UIBlueprintAsset = Cast<UWidgetBlueprint>(AssetTools.CreateAsset(
 			AssetName,
 			AssetPath,
 			AssetClass,
 			AssetFactory));
 
-		return UIBlueprintAsset;
+		return TTuple<FString, UWidgetBlueprint*>(AssetPath, UIBlueprintAsset);
 	}
 
-	return nullptr;
+	return TTuple<FString, UWidgetBlueprint*>("", nullptr);
 }
 
 void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBlueprint* WidgetBlueprint)
@@ -69,6 +75,7 @@ void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBluepr
 	for(int32 i = ValueArray.Num(); i --> 0;)
 	{
 		const FUILayerData* LayerData = reinterpret_cast<FUILayerData*>(ValueArray[i]);
+
 		/*switch (LayerData->LayerType)
 		{
 			default: break;
@@ -76,4 +83,11 @@ void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBluepr
 		}*/
 	}
 
+	WidgetTree->RootWidget = CanvasPanel;
+
+}
+
+void UIBuilder::SaveBlueprintAsset(FString AssetPath)
+{
+	UEditorAssetLibrary::SaveAsset(AssetPath, true);
 }

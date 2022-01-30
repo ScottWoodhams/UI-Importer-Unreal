@@ -82,14 +82,23 @@ FString SUIImporterWindow::GetPath() const
 FReply SUIImporterWindow::RunBuilder()
 {
 
-	UE_LOG(LogCore, Log, TEXT("Run UI Importer"));
-
-	UDataTable DataTable;
-	if(UDataParser::ValidateData(&AssetData, DataTable))
+	if(AssetData != nullptr)
 	{
-		UIBuilder* UIBuilder = NewObject<class UIBuilder>();
-		UIBuilder->Run(&AssetData, &DataTable);
+		UE_LOG(LogCore, Log, TEXT("Run UI Importer"));
+
+		UDataTable* Table = Cast<UDataTable>(UEditorAssetLibrary::LoadAsset(AssetData.ObjectPath.ToString()));
+
+		if(Table != nullptr)
+		{
+			if(UDataParser::ValidateData(&AssetData, *Table))
+			{
+				UIBuilder* UIBuilder = NewObject<UIBuilder>(UIBuilder::StaticClass());
+				UIBuilder->Run(&AssetData, Table);
+			}
+		}
+
 	}
+
 
 	return FReply::Handled();
 }
