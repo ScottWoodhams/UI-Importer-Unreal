@@ -3,28 +3,27 @@
 #include "DataParser.h"
 
 #include "DataStructure.h"
+#include "EditorAssetLibrary.h"
 #include "UIImporter.h"
 
 
-bool UDataParser::ValidateData(const FAssetData* AssetData, UDataTable* OutDataTable)
+UDataTable* UDataParser::ReturnValidData(const FAssetData* AssetData)
 {
 	UE_LOG(LogUIBuilder, Log, TEXT("Starting Data Validation"))
+	FString ObjectPath = AssetData->ObjectPath.ToString();
+	UDataTable* Table = Cast<UDataTable>(UEditorAssetLibrary::LoadAsset(ObjectPath));
 
-	UDataTable* Data = Cast<UDataTable>(AssetData->GetAsset());
-
-	if(Data == nullptr)
+	if(Datatable == nullptr)
 	{
 		UE_LOG(LogUIBuilder, Error, TEXT("Data is not valid"))
 		return false;
 	}
 
-	if(Data->RowStruct != FUILayerData::StaticStruct())
+	if(Datatable->RowStruct != FUILayerData::StaticStruct())
 	{
 		UE_LOG(LogUIBuilder, Error, TEXT("Data is not correct struct"))
 		return false;
 	}
-
-	OutDataTable = Data;
 
 	return true;
 }

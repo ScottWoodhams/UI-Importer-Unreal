@@ -17,56 +17,55 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SUIImporterWindow::Construct(const FArguments& InArgs)
 {
 	ChildSlot
+	[
+		SNew(SScrollBox)
+
+		+ SScrollBox::Slot()
+		  .VAlign(VAlign_Top)
+		  .Padding(5)
 		[
-			SNew(SScrollBox)
 
-			+ SScrollBox::Slot()
-			.VAlign(VAlign_Top)
-			.Padding(5)
-			[
-
-				SNew(SBorder)
+			SNew(SBorder)
 				.BorderBackgroundColor(FColor(192, 192, 192, 255))
 				.Padding(15.0f)
-				[
-					SNew(SVerticalBox)
+			[
+				SNew(SVerticalBox)
 
-					//Asset Selection
-					+ SVerticalBox::Slot()
-					[
-						SNew(SObjectPropertyEntryBox)
+				//Asset Selection
+				+ SVerticalBox::Slot()
+				[
+					SNew(SObjectPropertyEntryBox)
 						.OnObjectChanged(this, &SUIImporterWindow::OnDataChanged)
 						.ObjectPath(this, &SUIImporterWindow::GetPath)
 						.AllowedClass(UDataTable::StaticClass())
 						.DisplayThumbnail(true)
 						.DisplayBrowse(true)
-					]
+				]
 
-					//button to run importer
-					+ SVerticalBox::Slot()
-					.Padding(0, 10, 0, 0)
+				//button to run importer
+				+ SVerticalBox::Slot()
+				.Padding(0, 10, 0, 0)
+				[
+
+					SAssignNew(RunButton, SButton)
+
+					.OnClicked_Raw(this, &SUIImporterWindow::RunBuilder)
 					[
-
-						SAssignNew(RunButton, SButton)
-
-						.OnClicked_Raw(this, &SUIImporterWindow::RunBuilder)
-						[
-							SNew(STextBlock)
+						SNew(STextBlock)
 							.Font(FCoreStyle::Get().GetFontStyle(ButtonTextCoreStyle))
 							.Text(ButtonText)
 							.Justification(ETextJustify::Center)
-						]
 					]
 				]
 			]
-		];
+		]
+	];
 }
 
 void SUIImporterWindow::OnDataChanged(const FAssetData& InAssetData)
 {
 	AssetData = InAssetData;
 	UE_LOG(LogCore, Warning, TEXT("Object changed"))
-
 }
 
 FString SUIImporterWindow::GetPath() const
@@ -81,24 +80,16 @@ FString SUIImporterWindow::GetPath() const
 
 FReply SUIImporterWindow::RunBuilder()
 {
-
-	if(AssetData != nullptr)
+	if (AssetData != nullptr)
 	{
-		UE_LOG(LogCore, Log, TEXT("Run UI Importer"));
+		UDataTable* Table = UDataParser::ReturnValidData(&AssetData);
 
-		UDataTable* Table = Cast<UDataTable>(UEditorAssetLibrary::LoadAsset(AssetData.ObjectPath.ToString()));
-
-		if(Table != nullptr)
+		if (Table != nullptr)
 		{
-			if(UDataParser::ValidateData(&AssetData, Table))
-			{
-				UIBuilder* UIBuilder = NewObject<class UIBuilder>();
-				UIBuilder->Run(&AssetData, Table);
-			}
+			UIBuilder* UIBuilder = NewObject<class UIBuilder>();
+			UIBuilder->Run(&AssetData, Table);
 		}
-
 	}
-
 
 	return FReply::Handled();
 }

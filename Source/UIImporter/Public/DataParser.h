@@ -7,6 +7,6 @@ class UDataParser : public UObject
 {
 	GENERATED_BODY()
 public:
-	static bool ValidateData(const FAssetData* AssetData, UDataTable* OutDataTable);
+	static UDataTable* ReturnValidData(const FAssetData* AssetData);
 
 };
