@@ -10,6 +10,10 @@
 #include "Blueprint/WidgetTree.h"
 #include "Components/CanvasPanel.h"
 
+UIBuilder::UIBuilder()
+{
+}
+
 void UIBuilder::Run(FAssetData* AssetData, const UDataTable* DataTable)
 {
 	FString AssetPath = AssetData->PackagePath.ToString() + "/";
@@ -25,11 +29,9 @@ void UIBuilder::Run(FAssetData* AssetData, const UDataTable* DataTable)
 
 TTuple<FString, UWidgetBlueprint*> UIBuilder::CreateWidgetBlueprint(FAssetData* AssetData)
 {
-	//todo get file name and directory
+
 	FString AssetPath = AssetData->PackagePath.ToString() + "/";
-
-
-	//todo create widget blueprint
+	
 	IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>(AssetToolsModuleName).Get();
 	const FString PackagePath;
 	UClass* AssetClass = UWidgetBlueprint::StaticClass();
@@ -76,11 +78,18 @@ void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBluepr
 	{
 		const FUILayerData* LayerData = reinterpret_cast<FUILayerData*>(ValueArray[i]);
 
-		/*switch (LayerData->LayerType)
+		switch (LayerData->LayerType)
 		{
+		case ELayerKind::text:
+			//todo implement text builder
+			break;
+		case ELayerKind::pixel:
+			//todo implement image builder
+
+			break;
 			default: break;
 
-		}*/
+		}
 	}
 
 	WidgetTree->RootWidget = CanvasPanel;

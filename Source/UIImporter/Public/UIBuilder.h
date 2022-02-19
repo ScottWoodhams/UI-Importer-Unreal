@@ -1,10 +1,17 @@
 ﻿#pragma once
+
+#include "CoreMinimal.h"
 #include "WidgetBlueprint.h"
+#include "UObject/NoExportTypes.h"
+#include "UIBuilder.generated.h"
 
-class UIBuilder : public UObject
+UCLASS()
+class UIIMPORTER_API UIBuilder : public UObject
 {
-public:
+	GENERATED_BODY()
 
+public:
+	UIBuilder();
 	void Run(FAssetData* AssetData, const UDataTable* DataTable);
 
 private:

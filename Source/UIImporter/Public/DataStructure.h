@@ -22,7 +22,7 @@ enum ELayerKind
 };
 
 USTRUCT(BlueprintType)
-struct UIIMPORTER_API FTopRightBottomLeft
+struct UIIMPORTER_API FSlices
 {
 	GENERATED_BODY()
 
@@ -69,8 +69,6 @@ struct UIIMPORTER_API FTextDescriptor
 	UPROPERTY()
 	FColor Color;
 	UPROPERTY()
-	FString Alignment;
-	UPROPERTY()
 	FString Type;
 };
 
@@ -110,14 +108,12 @@ struct UIIMPORTER_API FUILayerData : public FTableRowBase
 	UPROPERTY(BlueprintReadOnly, Category = General)
 	FBounds Bounds;
 	UPROPERTY(BlueprintReadOnly, Category = General)
-	bool HasLayerEffects;
-	UPROPERTY(BlueprintReadOnly, Category = General)
 	bool IsComponent;
 	UPROPERTY(BlueprintReadOnly, Category = General)
 	FString Component = "";
 
 	UPROPERTY(BlueprintReadOnly, Category = Image)
-	FTopRightBottomLeft Slices = FTopRightBottomLeft();
+	FSlices Slices = FSlices();
 	UPROPERTY(BlueprintReadOnly, Category = Image)
 	FString SliceType = "";
 

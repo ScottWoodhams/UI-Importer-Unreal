@@ -26,8 +26,7 @@ public class UIImporter : ModuleRules
 			new[]
 			{
 				"Core",
-
-				// ... add other public dependencies that you statically link with here ...
+				"UMG",
 			}
 			);
 
@@ -52,7 +51,6 @@ public class UIImporter : ModuleRules
 				"InputCore",
 				"UnrealEd",
 				"ToolMenus",
-				// ... add private dependencies that you statically link with here ...
 			}
 			);
 

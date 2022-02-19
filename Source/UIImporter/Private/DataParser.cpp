@@ -6,7 +6,7 @@
 #include "UIImporter.h"
 
 
-bool UDataParser::ValidateData(const FAssetData* AssetData, UDataTable& OutDataTable)
+bool UDataParser::ValidateData(const FAssetData* AssetData, UDataTable* OutDataTable)
 {
 	UE_LOG(LogUIBuilder, Log, TEXT("Starting Data Validation"))
 
@@ -24,7 +24,7 @@ bool UDataParser::ValidateData(const FAssetData* AssetData, UDataTable& OutDataT
 		return false;
 	}
 
-	//OutDataTable = Data;
+	OutDataTable = Data;
 
 	return true;
 }

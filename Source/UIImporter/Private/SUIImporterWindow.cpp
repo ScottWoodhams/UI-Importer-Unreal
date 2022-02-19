@@ -90,9 +90,9 @@ FReply SUIImporterWindow::RunBuilder()
 
 		if(Table != nullptr)
 		{
-			if(UDataParser::ValidateData(&AssetData, *Table))
+			if(UDataParser::ValidateData(&AssetData, Table))
 			{
-				UIBuilder* UIBuilder = NewObject<UIBuilder>(UIBuilder::StaticClass());
+				UIBuilder* UIBuilder = NewObject<class UIBuilder>();
 				UIBuilder->Run(&AssetData, Table);
 			}
 		}
