@@ -1,7 +1,7 @@
 ﻿#include "DataParseTest.h"
 
+#include "DataParser.h"
 #include "Misc/AutomationTest.h"
-#include "Tests/AutomationEditorCommon.h"
 
 /* Tests to include
  * todo can pass on valid data
@@ -14,11 +14,12 @@
  */
 
 
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FValidGeneralData, "UIExporter.ParseData.GeneralData is Valid", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FValidData, "UIExporter.ParseData.GeneralData is Valid", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
 
 
-bool FValidGeneralData::RunTest(const FString& Parameters)
+bool FValidData::RunTest(const FString& Parameters)
 {
-	TestEqual(TEXT("Test equal"), 123, 123);
-	return true;
+	return TestEqual(TEXT(""), (UDataParser::ReturnValidData(nullptr) != nullptr), true);
+
 }
+

@@ -18,4 +18,5 @@ class UIIMPORTER_API UWidgetBuilderUtilities : public UObject
 
 public:
 	static void SetSlotDefaultProperties(const FUILayerData* LayerData, UCanvasPanelSlot* Slot);
+	static bool IsImageLayer(ELayerKind LayerKind);
 };

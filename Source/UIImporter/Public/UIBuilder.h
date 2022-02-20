@@ -16,7 +16,7 @@ public:
 
 private:
 	TTuple<FString, UWidgetBlueprint*> CreateWidgetBlueprint(FAssetData* AssetData);
-	void UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBlueprint* WidgetBlueprint);
+	void UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBlueprint* WidgetBlueprint, FString ContentDir);
 	void SaveBlueprintAsset(FString AssetPath);
 
 	const FString CreatedUniqueBlueprintSuffix = "WBP";

@@ -17,9 +17,9 @@ class UIIMPORTER_API UImageBuilder : public UObject
 {
 	GENERATED_BODY()
 public:
-	void CreateWidget(const FUILayerData* LayerData, const FString UIContentDirectory, UWidgetTree* BPWidgetTree, UCanvasPanel* RootCanvas);
+	static void CreateWidget(const FUILayerData* LayerData, const FString UIContentDirectory, UWidgetTree* BPWidgetTree, UCanvasPanel* RootCanvas);
 
 private:
-	void SetSlotProperties(const FUILayerData* LayerData, UCanvasPanelSlot* Slot);
-	void SetWidgetProperties(UImage* Image, const FUILayerData* LayerData, const FString UIContentDirectory);
+	static void SetSlotProperties(const FUILayerData* LayerData, UCanvasPanelSlot* Slot);
+	static void SetWidgetProperties(UImage* Image, const FUILayerData* LayerData, const FString UIContentDirectory);
 };

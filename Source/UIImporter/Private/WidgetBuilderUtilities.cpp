@@ -15,3 +15,20 @@ void UWidgetBuilderUtilities::SetSlotDefaultProperties(const FUILayerData* Layer
 	Slot->SetPosition(Position);
 	Slot->SetSize(Size);
 }
+
+bool UWidgetBuilderUtilities::IsImageLayer(ELayerKind LayerKind)
+{
+	switch (LayerKind)
+	{
+		case pixel:
+			return true;
+		case gradient:
+			return true;
+		case vector:
+			return true;
+		case pattern:
+			return true;
+		default:
+			return false;
+	}
+}

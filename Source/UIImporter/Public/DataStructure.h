@@ -37,7 +37,7 @@ struct UIIMPORTER_API FSlices
 };
 
 USTRUCT(BlueprintType)
-struct UIIMPORTER_API FBounds
+struct UIIMPORTER_API FLayerBounds
 {
 	GENERATED_BODY()
 
@@ -106,7 +106,7 @@ struct UIIMPORTER_API FUILayerData : public FTableRowBase
 	UPROPERTY(BlueprintReadOnly, Category = General)
 	TEnumAsByte<ELayerKind> LayerType;
 	UPROPERTY(BlueprintReadOnly, Category = General)
-	FBounds Bounds;
+	FLayerBounds Bounds;
 	UPROPERTY(BlueprintReadOnly, Category = General)
 	bool IsComponent;
 	UPROPERTY(BlueprintReadOnly, Category = General)

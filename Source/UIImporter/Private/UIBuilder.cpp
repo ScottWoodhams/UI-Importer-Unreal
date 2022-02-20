@@ -4,8 +4,10 @@
 #include "DataStructure.h"
 #include "EditorAssetLibrary.h"
 #include "IAssetTools.h"
+#include "ImageBuilder.h"
 #include "WidgetBlueprint.h"
 #include "WidgetBlueprintFactory.h"
+#include "WidgetBuilderUtilities.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetTree.h"
 #include "Components/CanvasPanel.h"
@@ -16,12 +18,12 @@ UIBuilder::UIBuilder()
 
 void UIBuilder::Run(FAssetData* AssetData, const UDataTable* DataTable)
 {
-	FString AssetPath = AssetData->PackagePath.ToString() + "/";
+	FString ContentDir = AssetData->PackagePath.ToString() + "/";
 	TTuple<FString, UWidgetBlueprint*> WidgetBlueprint = CreateWidgetBlueprint(AssetData);
 
 	if(WidgetBlueprint.Value != nullptr)
 	{
-		UpdateWidgetBlueprint(DataTable, WidgetBlueprint.Value);
+		UpdateWidgetBlueprint(DataTable, WidgetBlueprint.Value, ContentDir);
 		SaveBlueprintAsset(WidgetBlueprint.Key);
 	}
 
@@ -31,7 +33,7 @@ TTuple<FString, UWidgetBlueprint*> UIBuilder::CreateWidgetBlueprint(FAssetData* 
 {
 
 	FString AssetPath = AssetData->PackagePath.ToString() + "/";
-	
+
 	IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>(AssetToolsModuleName).Get();
 	const FString PackagePath;
 	UClass* AssetClass = UWidgetBlueprint::StaticClass();
@@ -62,7 +64,7 @@ TTuple<FString, UWidgetBlueprint*> UIBuilder::CreateWidgetBlueprint(FAssetData* 
 	return TTuple<FString, UWidgetBlueprint*>("", nullptr);
 }
 
-void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBlueprint* WidgetBlueprint)
+void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBlueprint* WidgetBlueprint, FString ContentDir)
 {
 	UWidgetTree* WidgetTree = WidgetBlueprint->WidgetTree;
 	WidgetTree->Modify();
@@ -77,6 +79,11 @@ void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBluepr
 	for(int32 i = ValueArray.Num(); i --> 0;)
 	{
 		const FUILayerData* LayerData = reinterpret_cast<FUILayerData*>(ValueArray[i]);
+
+		if(UWidgetBuilderUtilities::IsImageLayer(LayerData->LayerType))
+		{
+			UImageBuilder::CreateWidget(LayerData, ContentDir, WidgetTree, CanvasPanel);
+		}
 
 		switch (LayerData->LayerType)
 		{
