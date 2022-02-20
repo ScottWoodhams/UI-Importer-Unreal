@@ -5,6 +5,7 @@
 #include "EditorAssetLibrary.h"
 #include "IAssetTools.h"
 #include "ImageBuilder.h"
+#include "TextBuilder.h"
 #include "WidgetBlueprint.h"
 #include "WidgetBlueprintFactory.h"
 #include "WidgetBuilderUtilities.h"
@@ -71,7 +72,7 @@ void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBluepr
 
 	//create root panel to add widgets to
 	UCanvasPanel* CanvasPanel = WidgetTree->ConstructWidget<UCanvasPanel>();
-	TMap<FName, uint8*> Data = DataTable->GetRowMap();
+	const TMap<FName, uint8*> Data = DataTable->GetRowMap();
 	TArray<unsigned char*> ValueArray;
 	Data.GenerateValueArray(ValueArray);
 
@@ -84,23 +85,22 @@ void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBluepr
 		{
 			UImageBuilder::CreateWidget(LayerData, ContentDir, WidgetTree, CanvasPanel);
 		}
-
-		switch (LayerData->LayerType)
+		else if(LayerData->LayerType == text)
 		{
-		case ELayerKind::text:
-			//todo implement text builder
-			break;
-		case ELayerKind::pixel:
-			//todo implement image builder
-
-			break;
-			default: break;
-
+			UTextBuilder::CreateWidget(LayerData, WidgetTree, CanvasPanel);
+		}
+		else if(LayerData->IsComponent)
+		{
+			//todo set up component workflow -- need component library and component builder
+		}
+		else
+		{
+			//we dont support any other type of layers to we create an empty widget
+			//todo setup empty widget builder
 		}
 	}
 
 	WidgetTree->RootWidget = CanvasPanel;
-
 }
 
 void UIBuilder::SaveBlueprintAsset(FString AssetPath)
