@@ -21,16 +21,16 @@ void UTextBuilder::CreateWidget(const FUILayerData* LayerData,
 void UTextBuilder::SetSlotProperties(const FUILayerData* LayerData, UCanvasPanelSlot* CanvasSlot)
 {
 	UWidgetBuilderUtilities::SetSlotDefaultProperties(LayerData, CanvasSlot);
-	//todo find out the correct slot anchor point
-	if(LayerData->TextDescriptor.Type == "paint")
+
+	if(LayerData->TextDescriptor.Type != "point")
 	{
-		
+		CanvasSlot->SetAlignment(FVector2D(0.0f,0.0f));
 	}
 }
 
 void UTextBuilder::SetWidgetProperties(UTextBlock* TextBlock, const FUILayerData* LayerData)
 {
-	//todo set up font library 
+	//todo set up font library
 	//TextBlock->Font = LayerData.TextDescriptor.FontName
 
 	TextBlock->Text = FText::FromString(LayerData->TextDescriptor.TextKey);
@@ -39,5 +39,4 @@ void UTextBuilder::SetWidgetProperties(UTextBlock* TextBlock, const FUILayerData
 	FSlateFontInfo Font = FSlateFontInfo();
 	Font.Size = LayerData->TextDescriptor.Size;
 	TextBlock->Font = Font;
-	
 }
