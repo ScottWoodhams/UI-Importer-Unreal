@@ -13,6 +13,8 @@ class UIIMPORTER_API UIBuilder : public UObject
 public:
 	UIBuilder();
 	void Run(FAssetData* AssetData, const UDataTable* DataTable);
+	FString FontLibraryPath = "/UIImporter/FontLibrary.FontLibrary";
+	FString ComponentLibraryPath = "";
 
 private:
 	TTuple<FString, UWidgetBlueprint*> CreateWidgetBlueprint(FAssetData* AssetData);
@@ -21,6 +23,4 @@ private:
 
 	const FString CreatedUniqueBlueprintSuffix = "WBP";
 	const FName AssetToolsModuleName = "AssetTools";
-	const FString FontLibraryPath = "";
-	
 };

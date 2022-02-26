@@ -92,7 +92,7 @@ void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBluepr
 		}
 		else if(LayerData->LayerType == text)
 		{
-			UTextBuilder::CreateWidget(LayerData, WidgetTree, CanvasPanel);
+			UTextBuilder::CreateWidget(LayerData, WidgetTree, CanvasPanel, FontLibrary);
 		}
 		else if(LayerData->IsComponent)
 		{
