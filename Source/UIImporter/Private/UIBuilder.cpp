@@ -6,6 +6,7 @@
 #include "IAssetTools.h"
 #include "ImageBuilder.h"
 #include "TextBuilder.h"
+#include "UIFontLibrary.h"
 #include "WidgetBlueprint.h"
 #include "WidgetBlueprintFactory.h"
 #include "WidgetBuilderUtilities.h"
@@ -76,6 +77,10 @@ void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBluepr
 	TArray<unsigned char*> ValueArray;
 	Data.GenerateValueArray(ValueArray);
 
+	//todo load font library
+	UUIFontLibrary* FontLibrary = Cast<UUIFontLibrary>(UEditorAssetLibrary::LoadAsset(FontLibraryPath));
+	
+	
 	//loop through the array backwards as we create the widgets to keep correct depth order
 	for(int32 i = ValueArray.Num(); i --> 0;)
 	{

@@ -21,4 +21,6 @@ private:
 
 	const FString CreatedUniqueBlueprintSuffix = "WBP";
 	const FName AssetToolsModuleName = "AssetTools";
+	const FString FontLibraryPath = "";
+	
 };

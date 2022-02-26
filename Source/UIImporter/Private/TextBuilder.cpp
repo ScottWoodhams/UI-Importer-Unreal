@@ -3,19 +3,20 @@
 
 #include "TextBuilder.h"
 
+#include "UIFontLibrary.h"
 #include "WidgetBuilderUtilities.h"
 #include "Components/CanvasPanelSlot.h"
 #include "Components/TextBlock.h"
-
+#include "Engine/Font.h"
 
 
 void UTextBuilder::CreateWidget(const FUILayerData* LayerData,
-	UWidgetTree* BPWidgetTree, UCanvasPanel* RootCanvas)
+                                UWidgetTree* BPWidgetTree, UCanvasPanel* RootCanvas, UUIFontLibrary* FontLibrary)
 {
 	UTextBlock* TextBlock = BPWidgetTree->ConstructWidget<UTextBlock>(UTextBlock::StaticClass());
 	UCanvasPanelSlot* CanvasSlot = RootCanvas->AddChildToCanvas(TextBlock);
 	SetSlotProperties(LayerData, CanvasSlot);
-	SetWidgetProperties(TextBlock, LayerData);
+	SetWidgetProperties(TextBlock, LayerData, FontLibrary);
 }
 
 void UTextBuilder::SetSlotProperties(const FUILayerData* LayerData, UCanvasPanelSlot* CanvasSlot)
@@ -28,15 +29,15 @@ void UTextBuilder::SetSlotProperties(const FUILayerData* LayerData, UCanvasPanel
 	}
 }
 
-void UTextBuilder::SetWidgetProperties(UTextBlock* TextBlock, const FUILayerData* LayerData)
+void UTextBuilder::SetWidgetProperties(UTextBlock* TextBlock, const FUILayerData* LayerData, UUIFontLibrary* FontLibrary)
 {
-	//todo set up font library
-	//TextBlock->Font = LayerData.TextDescriptor.FontName
+	const FString FontName = FString(LayerData->TextDescriptor.FontName);
+	const UFont* Font = FontLibrary->GetFont(FontName);
+	FSlateFontInfo SlateFont = Font->GetLegacySlateFontInfo();
+	SlateFont.Size = LayerData->TextDescriptor.Size;
+	TextBlock->Font = SlateFont;
 
 	TextBlock->Text = FText::FromString(LayerData->TextDescriptor.TextKey);
 	FSlateColor TextColor = FSlateColor(LayerData->TextDescriptor.Color);
 	TextBlock->ColorAndOpacity = TextColor;
-	FSlateFontInfo Font = FSlateFontInfo();
-	Font.Size = LayerData->TextDescriptor.Size;
-	TextBlock->Font = Font;
 }
