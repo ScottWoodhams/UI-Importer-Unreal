@@ -1,6 +1,7 @@
 ﻿#include "UIBuilder.h"
 
 #include "AssetToolsModule.h"
+#include "ComponentBuilder.h"
 #include "DataStructure.h"
 #include "EditorAssetLibrary.h"
 #include "IAssetTools.h"
@@ -97,6 +98,7 @@ void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBluepr
 		else if(LayerData->IsComponent)
 		{
 			//todo set up component workflow -- need component library and component builder
+			UComponentBuilder::CreateWidget();
 		}
 		else
 		{
