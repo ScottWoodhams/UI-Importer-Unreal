@@ -14,7 +14,7 @@ public:
 	UIBuilder();
 	void Run(FAssetData* AssetData, const UDataTable* DataTable);
 	FString FontLibraryPath = "/UIImporter/FontLibrary.FontLibrary";
-	FString ComponentLibraryPath = "";
+	FString ComponentLibraryPath = "/UIImporter/ComponentLibrary.ComponentLibrary";
 
 private:
 	TTuple<FString, UWidgetBlueprint*> CreateWidgetBlueprint(FAssetData* AssetData);
