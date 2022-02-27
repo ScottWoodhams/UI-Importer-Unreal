@@ -2,8 +2,6 @@
 
 
 #include "UIFontLibrary.h"
-
-#include "UIImporter.h"
 #include "Engine/Font.h"
 
 const UFont* UUIFontLibrary::GetFont(const FString FontName)
@@ -17,6 +15,5 @@ const UFont* UUIFontLibrary::GetFont(const FString FontName)
 		}
 	}
 
-	//UE_LOG(LogUIBuilder, Warning, TEXT("No Foint found for %s"), FontName);
 	return nullptr;
 }

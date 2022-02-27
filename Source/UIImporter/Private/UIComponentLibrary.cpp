@@ -1,9 +1,9 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ComponentLibrary.h"
+#include "UIComponentLibrary.h"
 
-UWidgetBlueprint* UComponentLibrary::GetComponent(FString ComponentName)
+UUserWidget* UUIComponentLibrary::GetComponent(FString ComponentName)
 {
 	for(const FUIComponent Comp : Components)
 	{

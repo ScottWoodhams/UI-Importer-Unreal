@@ -1,10 +1,6 @@
-﻿#include "DataParseTest.h"
-
-#include "ComponentLibrary.h"
+﻿#include "UIComponentLibrary.h"
 #include "DataParser.h"
-#include "EditorAssetLibrary.h"
 #include "UIBuilder.h"
-#include "UIFontLibrary.h"
 #include "Misc/AutomationTest.h"
 
 /* Tests to include
@@ -18,26 +14,9 @@
  */
 
 
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FValidData, "UIExporter.ParseData.GeneralData is Valid", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FFontLibraryAccess, "UIExporter.Libraries.FontLibraryAccessable", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FComponentLibraryAccess, "UIExporter.Libraries.ComponentLibraryAccessable", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
-
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FValidData, "UIExporter.ParseData.GeneralData", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
 
 bool FValidData::RunTest(const FString& Parameters)
 {
 	return TestEqual(TEXT(""), (UDataParser::ReturnValidData(nullptr) != nullptr), true);
-}
-
-bool FFontLibraryAccess::RunTest(const FString& Parameters)
-{
-	UUIFontLibrary* FontLib = Cast<UUIFontLibrary>(UEditorAssetLibrary::LoadAsset("/UIImporter/UIFontLibrary.UIFontLibrary"));
-	
-	return TestEqual(TEXT(""), FontLib != nullptr, true);
-}
-
-bool FComponentLibraryAccess::RunTest(const FString& Parameters)
-{
-	UComponentLibrary* CompLib = Cast<UComponentLibrary>(UEditorAssetLibrary::LoadAsset("/UIImporter/ComponentLibrary.ComponentLibrary"));
-	return TestEqual(TEXT(""), CompLib != nullptr, true);
-
 }

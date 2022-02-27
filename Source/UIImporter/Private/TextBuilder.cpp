@@ -5,6 +5,7 @@
 
 #include "UIFontLibrary.h"
 #include "WidgetBuilderUtilities.h"
+#include "Blueprint/WidgetTree.h"
 #include "Components/CanvasPanelSlot.h"
 #include "Components/TextBlock.h"
 #include "Engine/Font.h"
@@ -34,6 +35,7 @@ void UTextBuilder::SetWidgetProperties(UTextBlock* TextBlock, const FUILayerData
 	const FString FontName = FString(LayerData->TextDescriptor.FontName);
 	const UFont* Font = FontLibrary->GetFont(FontName);
 	FSlateFontInfo SlateFont = Font->GetLegacySlateFontInfo();
+
 	SlateFont.Size = LayerData->TextDescriptor.Size;
 	TextBlock->Font = SlateFont;
 

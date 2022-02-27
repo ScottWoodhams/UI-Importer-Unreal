@@ -3,11 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/Object.h"
 #include "UIFontLibrary.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class UIIMPORTER_API UUIFontLibrary : public UDataAsset

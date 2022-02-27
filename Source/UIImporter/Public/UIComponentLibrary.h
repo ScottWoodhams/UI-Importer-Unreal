@@ -3,10 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "WidgetBlueprint.h"
 #include "Components/WidgetComponent.h"
-#include "UObject/Object.h"
-#include "ComponentLibrary.generated.h"
+#include "UIComponentLibrary.generated.h"
 
 
 USTRUCT(BlueprintType)
@@ -16,18 +14,19 @@ struct UIIMPORTER_API FUIComponent
 	UPROPERTY(EditAnywhere)
 	FString ComponentName;
 	UPROPERTY(EditAnywhere)
-	UWidgetBlueprint* WidgetBlueprint;
+	UUserWidget* WidgetBlueprint;
 };
 
 /**
- * 
+ *
  */
 UCLASS()
-class UIIMPORTER_API UComponentLibrary : public UDataAsset
+class UIIMPORTER_API UUIComponentLibrary : public UDataAsset
 {
 	GENERATED_BODY()
+public:
 	UPROPERTY(EditAnywhere)
 	TArray<FUIComponent> Components;
 
-	UWidgetBlueprint* GetComponent(FString ComponentName);
+	UUserWidget* GetComponent(FString ComponentName);
 };

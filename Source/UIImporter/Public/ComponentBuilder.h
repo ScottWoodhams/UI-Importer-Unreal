@@ -3,22 +3,21 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "UIComponentLibrary.h"
 #include "DataStructure.h"
-#include "Blueprint/WidgetTree.h"
 #include "Components/CanvasPanel.h"
-#include "Components/CanvasPanelSlot.h"
-#include "UObject/Object.h"
 #include "ComponentBuilder.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class UIIMPORTER_API UComponentBuilder : public UObject
 {
 	GENERATED_BODY()
-	void CreateWidget(const FUILayerData* LayerData, UWidgetTree* BPWidgetTree, UCanvasPanel* RootCanvas);
+public:
+	static void CreateWidget(const FUILayerData* LayerData, UWidgetTree* BPWidgetTree, UCanvasPanel* RootCanvas, UUIComponentLibrary* ComponentLibrary);
 private:
 	static void SetSlotProperties(const FUILayerData* LayerData, UCanvasPanelSlot* CanvasSlot);
-	//static void SetWidgetProperties(UTextBlock* TextBlock, const FUILayerData* LayerData, UUIFontL
+
 };

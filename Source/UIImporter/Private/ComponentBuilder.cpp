@@ -3,14 +3,17 @@
 
 #include "ComponentBuilder.h"
 
+#include "UIComponentLibrary.h"
 #include "WidgetBuilderUtilities.h"
+#include "Blueprint/WidgetTree.h"
 
-void UComponentBuilder::CreateWidget(const FUILayerData* LayerData, UWidgetTree* BPWidgetTree, UCanvasPanel* RootCanvas)
+void UComponentBuilder::CreateWidget(const FUILayerData* LayerData, UWidgetTree* BPWidgetTree, UCanvasPanel* RootCanvas, UUIComponentLibrary* ComponentLibrary)
 {
-	UWidget* TextBlock = BPWidgetTree->ConstructWidget<UWidget>(UWidget::StaticClass());
-	UCanvasPanelSlot* CanvasSlot = RootCanvas->AddChildToCanvas(TextBlock);
+	UUserWidget* UserWidget = BPWidgetTree->ConstructWidget<UUserWidget>(
+		ComponentLibrary->GetComponent(LayerData->Component)->GetClass());
+
+	UCanvasPanelSlot* CanvasSlot = RootCanvas->AddChildToCanvas(UserWidget);
 	SetSlotProperties(LayerData, CanvasSlot);
-	
 }
 
 void UComponentBuilder::SetSlotProperties(const FUILayerData* LayerData, UCanvasPanelSlot* CanvasSlot)
