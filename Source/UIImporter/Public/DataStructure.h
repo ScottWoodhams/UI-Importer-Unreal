@@ -21,6 +21,7 @@ enum ELayerKind
 	groupEnd = 13
 };
 
+
 USTRUCT(BlueprintType)
 struct UIIMPORTER_API FSlices
 {
@@ -68,6 +69,7 @@ struct UIIMPORTER_API FTextDescriptor
 	FString TextKey;
 	UPROPERTY()
 	FColor Color;
+	//todo should change to enum to ensure correct type
 	UPROPERTY()
 	FString Type;
 };

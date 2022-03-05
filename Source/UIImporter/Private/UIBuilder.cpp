@@ -92,6 +92,7 @@ void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBluepr
 		else if(LayerData->IsComponent)
 		{
 			//todo set up component workflow -- need component library and component builder
+
 		}
 		else
 		{

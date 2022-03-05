@@ -4,6 +4,7 @@
 #include "TextBuilder.h"
 
 #include "WidgetBuilderUtilities.h"
+#include "Blueprint/WidgetTree.h"
 #include "Components/CanvasPanelSlot.h"
 #include "Components/TextBlock.h"
 

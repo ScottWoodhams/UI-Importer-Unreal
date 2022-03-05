@@ -4,14 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "DataStructure.h"
-#include "Blueprint/WidgetTree.h"
 #include "Components/CanvasPanel.h"
 #include "Components/TextBlock.h"
-#include "UObject/Object.h"
 #include "TextBuilder.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class UIIMPORTER_API UTextBuilder : public UObject

@@ -2,7 +2,6 @@
 
 #include "CoreMinimal.h"
 #include "WidgetBlueprint.h"
-#include "UObject/NoExportTypes.h"
 #include "UIBuilder.generated.h"
 
 UCLASS()

@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "DataStructure.h"
 #include "Components/CanvasPanelSlot.h"
-#include "UObject/Object.h"
 #include "WidgetBuilderUtilities.generated.h"
 
 /**
