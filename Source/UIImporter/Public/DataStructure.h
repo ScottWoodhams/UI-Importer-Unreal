@@ -27,13 +27,13 @@ struct UIIMPORTER_API FSlices
 {
 	GENERATED_BODY()
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	float Top;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	float Right;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	float Bottom;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	float Left;
 };
 
@@ -42,17 +42,17 @@ struct UIIMPORTER_API FLayerBounds
 {
 	GENERATED_BODY()
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	float Top;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	float Left;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	float Bottom;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	float Right;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	float Width;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	float Height;
 };
 
@@ -61,16 +61,16 @@ struct UIIMPORTER_API FTextDescriptor
 {
 	GENERATED_BODY()
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	FString FontName;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	float Size;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	FString TextKey;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	FColor Color;
 	//todo should change to enum to ensure correct type
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	FString Type;
 };
 
@@ -79,9 +79,9 @@ struct UIIMPORTER_API FFrameFXDescriptor
 {
 	GENERATED_BODY()
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	int32 Size;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	FColor Color;
 };
 
@@ -90,11 +90,11 @@ struct UIIMPORTER_API FDropShadowDescriptor
 {
 	GENERATED_BODY()
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	float Distance;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	FColor Color;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	float Angle;
 };
 
@@ -103,28 +103,28 @@ struct UIIMPORTER_API FUILayerData : public FTableRowBase
 {
 	GENERATED_BODY()
 
-	UPROPERTY(BlueprintReadOnly, Category = General)
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category = General)
 	FString Name;
-	UPROPERTY(BlueprintReadOnly, Category = General)
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category = General)
 	TEnumAsByte<ELayerKind> LayerType;
-	UPROPERTY(BlueprintReadOnly, Category = General)
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category = General)
 	FLayerBounds Bounds;
-	UPROPERTY(BlueprintReadOnly, Category = General)
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category = General)
 	bool IsComponent;
-	UPROPERTY(BlueprintReadOnly, Category = General)
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category = General)
 	FString Component = "";
 
-	UPROPERTY(BlueprintReadOnly, Category = Image)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere,Category = Image)
 	FSlices Slices = FSlices();
-	UPROPERTY(BlueprintReadOnly, Category = Image)
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category = Image)
 	FString SliceType = "";
 
-	UPROPERTY(BlueprintReadOnly, Category = Text)
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category = Text)
 	FTextDescriptor TextDescriptor = FTextDescriptor();
 
-	UPROPERTY(BlueprintReadOnly, Category = Outline)
+	UPROPERTY(BlueprintReadWrite,EditAnywhere, Category = Outline)
 	FFrameFXDescriptor FrameFXDescriptor = FFrameFXDescriptor();
 
-	UPROPERTY(BlueprintReadOnly, Category = DropShown)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = DropShown)
 	FDropShadowDescriptor DropShadowDescriptor = FDropShadowDescriptor();
 };

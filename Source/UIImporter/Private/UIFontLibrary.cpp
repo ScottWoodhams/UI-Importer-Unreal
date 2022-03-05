@@ -7,13 +7,16 @@
 const UFont* UUIFontLibrary::GetFont(const FString FontName)
 {
 	const FName WantedFontName = FName(FontName);
-	for(const UFont* Font : Fonts)
+	if(Fonts.Num() > 0)
 	{
-		if(Font->LegacyFontName == WantedFontName)
+		for(const UFont* Font : Fonts)
 		{
-			return Font;
+			if(Font->LegacyFontName == WantedFontName)
+			{
+				return Font;
+			}
 		}
 	}
-
+	
 	return nullptr;
 }

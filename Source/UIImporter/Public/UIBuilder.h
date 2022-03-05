@@ -12,8 +12,9 @@ class UIIMPORTER_API UIBuilder : public UObject
 public:
 	UIBuilder();
 	void Run(const FAssetData* AssetData, const UDataTable* DataTable) const;
-	FString FontLibraryPath = "/UIImporter/FontLibrary.FontLibrary";
-	FString ComponentLibraryPath = "/UIImporter/ComponentLibrary.ComponentLibrary";
+	FString FontLibraryPath = "/UIImporter/UIFontLibrary.UIFontLibrary";
+	
+	FString ComponentLibraryPath = "/UIImporter/UIComponentLibrary.UIComponentLibrary";
 
 private:
 	TTuple<FString, UWidgetBlueprint*> CreateWidgetBlueprint(const FAssetData* AssetData) const;

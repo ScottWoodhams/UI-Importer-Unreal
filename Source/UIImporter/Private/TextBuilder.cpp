@@ -9,6 +9,7 @@
 #include "Components/CanvasPanelSlot.h"
 #include "Components/TextBlock.h"
 #include "Engine/Font.h"
+#include "EditorAssetLibrary.h"
 
 
 void UTextBuilder::CreateWidget(const FUILayerData* LayerData,
@@ -34,6 +35,11 @@ void UTextBuilder::SetWidgetProperties(UTextBlock* TextBlock, const FUILayerData
 {
 	const FString FontName = FString(LayerData->TextDescriptor.FontName);
 	const UFont* Font = FontLibrary->GetFont(FontName);
+	if(Font == nullptr)
+	{
+		//load engine font as default
+		Font = Cast<UFont>(UEditorAssetLibrary::LoadAsset("/Engine/EngineFonts/Roboto.Roboto"));
+	}
 	FSlateFontInfo SlateFont = Font->GetLegacySlateFontInfo();
 
 	SlateFont.Size = LayerData->TextDescriptor.Size;

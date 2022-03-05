@@ -14,7 +14,7 @@ class UIIMPORTER_API UUIFontLibrary : public UDataAsset
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	TArray<UFont*> Fonts;
 
 	const UFont* GetFont(const FString FontName);

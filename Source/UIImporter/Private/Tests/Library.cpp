@@ -44,5 +44,5 @@ bool FLoadComponent::RunTest(const FString& Parameters)
 
 	UUserWidget* LoadedComp = CompLib->GetComponent("Test");
 
-	return TestNotNull(TEXT("Retrieves Roboto Fone"), LoadedComp);
+	return TestNotNull(TEXT("Retrieves Test component"), LoadedComp);
 }

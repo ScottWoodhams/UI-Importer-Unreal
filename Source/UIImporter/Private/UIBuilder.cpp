@@ -39,17 +39,17 @@ TTuple<FString, UWidgetBlueprint*> UIBuilder::CreateWidgetBlueprint(const FAsset
 	FString AssetPath = AssetData->PackagePath.ToString() + "/";
 
 	IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>(AssetToolsModuleName).Get();
-	FString PackagePath;
+	FString PackagePath = AssetPath;
 	UClass* AssetClass = UWidgetBlueprint::StaticClass();
 	UFactory* AssetFactory = NewObject<UWidgetBlueprintFactory>();
 
-	FString AssetName;
+	FString AssetName = "WBP_" + AssetData->AssetName.ToString();
 
-	AssetTools.CreateUniqueAssetName(
+	/*AssetTools.CreateUniqueAssetName(
 		PackagePath,
 		CreatedUniqueBlueprintSuffix,
 		AssetPath,
-		AssetName);
+		AssetName);*/
 
 	if(UEditorAssetLibrary::DoesAssetExist(AssetPath) == false)
 	{
@@ -79,10 +79,8 @@ void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, const UWidget
 	TArray<unsigned char*> ValueArray;
 	Data.GenerateValueArray(ValueArray);
 
-	//todo load font library
 	UUIFontLibrary* FontLibrary = Cast<UUIFontLibrary>(UEditorAssetLibrary::LoadAsset(FontLibraryPath));
 	UUIComponentLibrary* ComponentLibrary = Cast<UUIComponentLibrary>(UEditorAssetLibrary::LoadAsset(FontLibraryPath));
-
 
 	//loop through the array backwards as we create the widgets to keep correct depth order
 	for(int32 i = ValueArray.Num(); i --> 0;)
@@ -99,20 +97,14 @@ void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, const UWidget
 		}
 		else if(LayerData->IsComponent)
 		{
-
 			UComponentBuilder::CreateWidget(LayerData,WidgetTree,CanvasPanel, ComponentLibrary);
-		}
-		else
-		{
-			//we dont support any other type of layers to we create an empty widget
-			//todo setup empty widget builder
 		}
 	}
 
 	WidgetTree->RootWidget = CanvasPanel;
 }
 
-void UIBuilder::SaveBlueprintAsset(FString AssetPath)
+void UIBuilder::SaveBlueprintAsset(const FString AssetPath)
 {
 	UEditorAssetLibrary::SaveAsset(AssetPath, true);
 }

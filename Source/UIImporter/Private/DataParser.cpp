@@ -53,10 +53,7 @@ UDataTable* UDataParser::ReturnValidData(const FAssetData* AssetData)
 			{
 				UE_LOG(LogUIBuilder, Warning, TEXT("Could not find texture"), RowItr.Value);
 			}
-
-
 		}
-
 	}
 
 
