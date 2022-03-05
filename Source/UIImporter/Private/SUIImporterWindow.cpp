@@ -5,7 +5,6 @@
 
 #include "DataParser.h"
 #include "SlateOptMacros.h"
-#include "EditorAssetLibrary.h"
 #include "SAssetDropTarget.h"
 #include "Widgets/Layout/SScrollBox.h"
 #include "PropertyEditor/Private/PropertyEditorHelpers.h"

@@ -1,6 +1,6 @@
-﻿#include "DataParseTest.h"
-
+﻿#include "UIComponentLibrary.h"
 #include "DataParser.h"
+#include "UIBuilder.h"
 #include "Misc/AutomationTest.h"
 
 /* Tests to include
@@ -14,12 +14,9 @@
  */
 
 
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FValidData, "UIExporter.ParseData.GeneralData is Valid", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
-
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FValidData, "UIExporter.ParseData.GeneralData", EAutomationTestFlags::EditorContext | EAutomationTestFlags::EngineFilter)
 
 bool FValidData::RunTest(const FString& Parameters)
 {
 	return TestEqual(TEXT(""), (UDataParser::ReturnValidData(nullptr) != nullptr), true);
-
 }
-

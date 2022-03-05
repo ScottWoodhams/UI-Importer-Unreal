@@ -1,23 +1,26 @@
 ﻿#include "UIBuilder.h"
 
 #include "AssetToolsModule.h"
+#include "ComponentBuilder.h"
 #include "DataStructure.h"
 #include "EditorAssetLibrary.h"
 #include "IAssetTools.h"
 #include "ImageBuilder.h"
 #include "TextBuilder.h"
+#include "UIFontLibrary.h"
 #include "WidgetBlueprint.h"
 #include "WidgetBlueprintFactory.h"
 #include "WidgetBuilderUtilities.h"
 #include "Blueprint/UserWidget.h"
 #include "Blueprint/WidgetTree.h"
 #include "Components/CanvasPanel.h"
+#include "UIComponentLibrary.h"
 
 UIBuilder::UIBuilder()
 {
 }
 
-void UIBuilder::Run(FAssetData* AssetData, const UDataTable* DataTable)
+void UIBuilder::Run(const FAssetData* AssetData, const UDataTable* DataTable) const
 {
 	FString ContentDir = AssetData->PackagePath.ToString() + "/";
 	TTuple<FString, UWidgetBlueprint*> WidgetBlueprint = CreateWidgetBlueprint(AssetData);
@@ -30,13 +33,13 @@ void UIBuilder::Run(FAssetData* AssetData, const UDataTable* DataTable)
 
 }
 
-TTuple<FString, UWidgetBlueprint*> UIBuilder::CreateWidgetBlueprint(FAssetData* AssetData)
+TTuple<FString, UWidgetBlueprint*> UIBuilder::CreateWidgetBlueprint(const FAssetData* AssetData) const
 {
 
 	FString AssetPath = AssetData->PackagePath.ToString() + "/";
 
 	IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>(AssetToolsModuleName).Get();
-	const FString PackagePath;
+	FString PackagePath;
 	UClass* AssetClass = UWidgetBlueprint::StaticClass();
 	UFactory* AssetFactory = NewObject<UWidgetBlueprintFactory>();
 
@@ -65,7 +68,7 @@ TTuple<FString, UWidgetBlueprint*> UIBuilder::CreateWidgetBlueprint(FAssetData* 
 	return TTuple<FString, UWidgetBlueprint*>("", nullptr);
 }
 
-void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBlueprint* WidgetBlueprint, FString ContentDir)
+void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, const UWidgetBlueprint* WidgetBlueprint, FString ContentDir) const
 {
 	UWidgetTree* WidgetTree = WidgetBlueprint->WidgetTree;
 	WidgetTree->Modify();
@@ -75,6 +78,11 @@ void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBluepr
 	const TMap<FName, uint8*> Data = DataTable->GetRowMap();
 	TArray<unsigned char*> ValueArray;
 	Data.GenerateValueArray(ValueArray);
+
+	//todo load font library
+	UUIFontLibrary* FontLibrary = Cast<UUIFontLibrary>(UEditorAssetLibrary::LoadAsset(FontLibraryPath));
+	UUIComponentLibrary* ComponentLibrary = Cast<UUIComponentLibrary>(UEditorAssetLibrary::LoadAsset(FontLibraryPath));
+
 
 	//loop through the array backwards as we create the widgets to keep correct depth order
 	for(int32 i = ValueArray.Num(); i --> 0;)
@@ -87,12 +95,12 @@ void UIBuilder::UpdateWidgetBlueprint(const UDataTable* DataTable, UWidgetBluepr
 		}
 		else if(LayerData->LayerType == text)
 		{
-			UTextBuilder::CreateWidget(LayerData, WidgetTree, CanvasPanel);
+			UTextBuilder::CreateWidget(LayerData, WidgetTree, CanvasPanel, FontLibrary);
 		}
 		else if(LayerData->IsComponent)
 		{
-			//todo set up component workflow -- need component library and component builder
 
+			UComponentBuilder::CreateWidget(LayerData,WidgetTree,CanvasPanel, ComponentLibrary);
 		}
 		else
 		{

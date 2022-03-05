@@ -10,10 +10,10 @@
   "DocsURL": "",
   "MarketplaceURL": "",
   "SupportURL": "",
-  "CanContainContent": false,
+  "CanContainContent": true,
   "IsBetaVersion": true,
   "IsExperimentalVersion": false,
-  "Installed": false,
+  "Installed": true,
   "Modules": [
     {
       "Name": "UIImporter",

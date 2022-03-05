@@ -51,6 +51,7 @@ public class UIImporter : ModuleRules
 				"InputCore",
 				"UnrealEd",
 				"ToolMenus",
+				"FontEditor"
 			}
 			);
 
