@@ -19,7 +19,7 @@ public:
 	virtual void ShutdownModule() override;
 
 	/** This function will be bound to Command (by default it will bring up plugin window) */
-	void PluginButtonClicked();
+	void OpenImporterTab() const;
 
 	FAssetData S_AssetData;
 	FString GetPath() const;
@@ -28,9 +28,14 @@ public:
 private:
 
 	void RegisterMenus();
+	void MakePullDownMenu(FMenuBarBuilder &MenuBuilder) const;
+	void FillPullDownMenu(FMenuBuilder &MenuBuilder) const;
+	TSharedRef<SDockTab> OnSpawnPluginTab(const FSpawnTabArgs& SpawnTabArgs);
+	void MakeTabMenuEntry(FMenuBuilder& menuBuilder) const;
+	void OpenFontLibrary() const;
+	void OpenWidgetLibrary() const;
+	TSharedPtr<FUICommandList> PluginCommands;
 
-	TSharedRef<class SDockTab> OnSpawnPluginTab(const class FSpawnTabArgs& SpawnTabArgs);
-
-private:
-	TSharedPtr<class FUICommandList> PluginCommands;
+	const FString FontLibraryPath = "/UIImporter/UIFontLibrary.UIFontLibrary";
+	const FString WidgetLibraryPath = "/UIImporter/UIComponentLibrary.UIComponentLibrary";
 };
