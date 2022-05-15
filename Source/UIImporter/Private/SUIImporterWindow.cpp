@@ -4,6 +4,7 @@
 #include "SUIImporterWindow.h"
 
 #include "DataParser.h"
+#include "EditorAssetLibrary.h"
 #include "SlateOptMacros.h"
 #include "SAssetDropTarget.h"
 #include "Widgets/Layout/SScrollBox.h"
@@ -56,6 +57,14 @@ void SUIImporterWindow::Construct(const FArguments& InArgs)
 							.Justification(ETextJustify::Center)
 					]
 				]
+				+ SVerticalBox::Slot().Padding(0, 100, 0,0)
+				[
+					SAssignNew(InformationBlock, STextBlock)
+					.Font(FCoreStyle::Get().GetFontStyle(ButtonTextCoreStyle))
+					.Text(this, &SUIImporterWindow::GetInformationText)
+					.Justification(ETextJustify::Left)
+				]
+				
 			]
 		]
 	];
@@ -65,6 +74,28 @@ void SUIImporterWindow::OnDataChanged(const FAssetData& InAssetData)
 {
 	AssetData = InAssetData;
 	UE_LOG(LogCore, Warning, TEXT("Object changed"))
+	InformationBlockText = FText::FromString("Object changed");
+	InformationBlock->SetText(DataToString());
+}
+
+FText SUIImporterWindow::DataToString()
+{
+	FString Info = "";
+
+	FString ObjectPath = AssetData.ObjectPath.ToString();
+	UDataTable* Table = Cast<UDataTable>(UEditorAssetLibrary::LoadAsset(ObjectPath));
+	TArray<FUILayerData*> Rows;
+	Table->GetAllRows("",Rows );
+	uint32 num = Rows.Num();
+
+	Info = Info.Format(TEXT("Number of Layers: {0}"), {num});
+	
+	return FText::FromString(Info);
+}
+
+FText SUIImporterWindow::GetInformationText() const
+{
+	return InformationBlockText;
 }
 
 FString SUIImporterWindow::GetPath() const

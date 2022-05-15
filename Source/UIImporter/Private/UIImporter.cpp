@@ -18,50 +18,45 @@ DEFINE_LOG_CATEGORY(LogUIBuilder);
 
 void FUIImporterModule::StartupModule()
 {
-	if(!IsRunningCommandlet())
+	if (!IsRunningCommandlet())
 	{
 		FUIImporterStyle::Initialize();
 		FUIImporterStyle::ReloadTextures();
 
-		FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>(FName("LevelEditor"));
-		TSharedPtr<FExtensibilityManager> LevelEditorMenuExtensibilityManager = LevelEditorModule.
+		FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>(
+			FName("LevelEditor"));
+		const TSharedPtr<FExtensibilityManager> LevelEditorMenuExtensibilityManager = LevelEditorModule.
 			GetMenuExtensibilityManager();
-		
-		TSharedPtr<FExtender> MenuExtender = MakeShareable(new FExtender);
-		
+
+		const TSharedPtr<FExtender> MenuExtender = MakeShareable(new FExtender);
+
+		//add the uiimporter option to the menu bar
 		MenuExtender->AddMenuBarExtension(
 			"Help",
 			EExtensionHook::After,
 			nullptr,
 			FMenuBarExtensionDelegate::CreateRaw(this, &FUIImporterModule::MakePullDownMenu));
 
+		LevelEditorMenuExtensibilityManager->AddExtender(MenuExtender);
+
 		//register ui importer window
 		FGlobalTabmanager::Get()->RegisterNomadTabSpawner(
-		"UIImporter",
-		FOnSpawnTab::CreateRaw(this, &FUIImporterModule::OnSpawnPluginTab))
-			.SetGroup(FWorkspaceItem::NewGroup(FText::FromString("Menu Root")))
-			.SetDisplayName(FText::FromString("UI Importer"))
-			.SetTooltipText(FText::FromString("ToolTipText"));
-
-		LevelEditorMenuExtensibilityManager->AddExtender(MenuExtender);
+			                        "UIImporter",
+			                        FOnSpawnTab::CreateRaw(this, &FUIImporterModule::OnSpawnPluginTab))
+		                        .SetGroup(FWorkspaceItem::NewGroup(FText::FromString("Menu Root")))
+		                        .SetDisplayName(FText::FromString("UI Importer"))
+		                        .SetTooltipText(FText::FromString("ToolTipText"));
 	}
-
-
 }
 
 void FUIImporterModule::ShutdownModule()
 {
 	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
 	// we call this function before unloading the module.
-
 	UToolMenus::UnRegisterStartupCallback(this);
-
 	UToolMenus::UnregisterOwner(this);
-
 	FUIImporterStyle::Shutdown();
-
 	FUIImporterCommands::Unregister();
-
 	FGlobalTabmanager::Get()->UnregisterNomadTabSpawner(UIImporterTabName);
 }
 
@@ -74,21 +69,6 @@ TSharedRef<SDockTab> FUIImporterModule::OnSpawnPluginTab(const FSpawnTabArgs& Sp
 		];
 }
 
-void FUIImporterModule::OnDataChanged(const FAssetData& AssetData)
-{
-	S_AssetData = AssetData;
-}
-
-FString FUIImporterModule::GetPath() const
-{
-	if (S_AssetData.IsValid())
-	{
-		return S_AssetData.ObjectPath.ToString();
-	}
-	return "";
-}
-
-
 void FUIImporterModule::RegisterMenus()
 {
 	// Owner will be used for cleanup in call to UToolMenus::UnregisterOwner
@@ -96,12 +76,11 @@ void FUIImporterModule::RegisterMenus()
 
 	{
 		{
-			UToolMenu * Menu = UToolMenus::Get()->ExtendMenu("LevelEditor.MainMenu");
+			UToolMenu* Menu = UToolMenus::Get()->ExtendMenu("LevelEditor.MainMenu");
 			FToolMenuSection& Section = Menu->FindOrAddSection("General");
 			Section.AddMenuEntryWithCommandList(FUIImporterCommands::Get().OpenPluginWindow, PluginCommands);
 		}
 	}
-
 }
 
 void FUIImporterModule::MakePullDownMenu(FMenuBarBuilder& MenuBuilder) const
@@ -118,7 +97,6 @@ void FUIImporterModule::MakePullDownMenu(FMenuBarBuilder& MenuBuilder) const
 
 void FUIImporterModule::FillPullDownMenu(FMenuBuilder& MenuBuilder) const
 {
-
 	MenuBuilder.BeginSection(FName("Builder"), FText::FromString("BuilderWindow"));
 	MenuBuilder.AddMenuEntry(
 		FText::FromString("UIImporter Window"),
@@ -127,7 +105,7 @@ void FUIImporterModule::FillPullDownMenu(FMenuBuilder& MenuBuilder) const
 		FUIAction(FExecuteAction::CreateRaw(this, &FUIImporterModule::OpenImporterTab)));
 	MenuBuilder.EndSection();
 
-	MenuBuilder.BeginSection(FName("Access"),  FText::FromString("Access"));
+	MenuBuilder.BeginSection(FName("Access"), FText::FromString("Access"));
 
 	MenuBuilder.AddMenuEntry(
 		FText::FromString("OpenFontLibrary"),
@@ -140,16 +118,10 @@ void FUIImporterModule::FillPullDownMenu(FMenuBuilder& MenuBuilder) const
 		FText::FromString("Opens the widget library asset"),
 		FSlateIcon(),
 		FUIAction(FExecuteAction::CreateRaw(this, &FUIImporterModule::OpenWidgetLibrary)));
-		
+
 
 	MenuBuilder.EndSection();
 }
-
-void FUIImporterModule::MakeTabMenuEntry(FMenuBuilder& menuBuilder) const
-{
-	FGlobalTabmanager::Get()->PopulateTabSpawnerMenu(menuBuilder, "UIImporter");
-}
-
 
 void FUIImporterModule::OpenImporterTab() const
 {

@@ -31,7 +31,6 @@ private:
 	void MakePullDownMenu(FMenuBarBuilder &MenuBuilder) const;
 	void FillPullDownMenu(FMenuBuilder &MenuBuilder) const;
 	TSharedRef<SDockTab> OnSpawnPluginTab(const FSpawnTabArgs& SpawnTabArgs);
-	void MakeTabMenuEntry(FMenuBuilder& menuBuilder) const;
 	void OpenFontLibrary() const;
 	void OpenWidgetLibrary() const;
 	TSharedPtr<FUICommandList> PluginCommands;

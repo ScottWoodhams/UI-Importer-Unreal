@@ -22,11 +22,15 @@ SLATE_BEGIN_ARGS(SUIImporterWindow)
 
 	FString GetPath() const;
 	void OnDataChanged(const FAssetData& InAssetData);
-	FReply RunBuilder();
+FText DataToString();
+FText GetInformationText() const;
+FReply RunBuilder();
 
 	FAssetData AssetData;
 	TSharedPtr<SButton> RunButton;
-
+	TSharedPtr<STextBlock> InformationBlock;
+	
 	const FText ButtonText = FText::FromString("Run");
 	const FName ButtonTextCoreStyle = "EmbossedText";
+	FText InformationBlockText = FText::FromString("Add Asset to show information.");
 };
